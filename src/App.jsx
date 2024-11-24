@@ -6,6 +6,7 @@ import ImportersList from './Screens/DocumentVerification/ImportersList'
 import ImporterDocuments from './Screens/DocumentVerification/ImporterDocuments'
 import ProtectedRoute from './Components/ProtectedRoute'
 import CreateShipment from './Screens/ShipmentManagement/CreateShipment'
+import QueryManagement from './Screens/Queries/QueryManagement'
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +24,7 @@ function App() {
         <Route path="/importerslist" element={<ImportersList />} />
         <Route path="/importerdocs" element={<ImporterDocuments />} />
         <Route path="/newshipment" element={<CreateShipment />} />
+        <Route path="querymanagement" element={<QueryManagement/>} />
       </Routes>
     </BrowserRouter>
   )

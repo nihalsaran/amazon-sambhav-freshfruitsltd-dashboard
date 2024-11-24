@@ -324,7 +324,7 @@ export default function Dashboard() {
           <MetricChange isPositive>+8% from last month</MetricChange>
         </MetricCard>
 
-        <MetricCard>
+        <MetricCard onClick={() => navigate('/querymanagement')}>
           <MetricTitle>
             Pending Queries
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -332,7 +332,6 @@ export default function Dashboard() {
             </svg>
           </MetricTitle>
           <MetricValue color="#F1C40F">256</MetricValue>
-          <MetricChange isPositive={false}>-5% from last month</MetricChange>
         </MetricCard>
 
         <MetricCard>
@@ -346,15 +345,14 @@ export default function Dashboard() {
           <MetricChange isPositive>+12% from last month</MetricChange>
         </MetricCard>
 
-        <MetricCard>
+        <MetricCard onClick={() => navigate('/importerslist')}>
           <MetricTitle>
-            Compliance Score
+            Pending Documents
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
             </svg>
           </MetricTitle>
           <MetricValue color="#2ECC71">96%</MetricValue>
-          <MetricChange isPositive>+3% from last month</MetricChange>
         </MetricCard>
       </MetricsGrid>
 
