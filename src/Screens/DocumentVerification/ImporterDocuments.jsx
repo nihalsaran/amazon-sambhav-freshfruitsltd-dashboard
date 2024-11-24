@@ -1,6 +1,7 @@
 // src/components/ImporterDocuments.jsx
 import styled from 'styled-components'
 import { ChevronRight, FileText, File, Image } from 'lucide-react'
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 20px;
@@ -190,6 +191,12 @@ const Button = styled.button`
   }}
 `
 
+const ImporterName = styled.h1`
+  font-size: 24px;
+  color: #0A2647;
+  margin-bottom: 24px;
+`;
+
 const getFileIcon = (fileName) => {
   if (fileName.endsWith('.pdf')) return <FileText size={20} />;
   if (fileName.endsWith('.docx')) return <File size={20} />;
@@ -198,6 +205,8 @@ const getFileIcon = (fileName) => {
 }
 
 export default function ImporterDocuments() {
+  const location = useLocation();
+  const importer = location.state?.importer;
   return (
     <Container>
       <Breadcrumb>
@@ -211,6 +220,8 @@ export default function ImporterDocuments() {
       <Banner>
         3 Pending Documents for Approval
       </Banner>
+
+      <ImporterName>{importer?.name || 'Importer Co.'}</ImporterName>
       
       <MetricsGrid>
         <MetricCard>

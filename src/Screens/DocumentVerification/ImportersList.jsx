@@ -1,6 +1,7 @@
 // src/components/ImportersList.jsx
 import styled from 'styled-components'
 import { ChevronDown } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 20px;
@@ -88,9 +89,15 @@ const ImporterRow = styled.div`
   padding: 16px 24px;
   border-bottom: 1px solid #e0e0e0;
   align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
   
   &:last-child {
     border-bottom: none;
+  }
+  
+  &:hover {
+    background-color: #f8f9fa;
   }
 `
 
@@ -149,6 +156,11 @@ const importers = [
 ]
 
 export default function ImportersList() {
+  const navigate = useNavigate();
+
+  const handleImporterClick = (importer) => {
+    navigate('/importerdocs', { state: { importer } });
+  };
   return (
     <Container>
       <Header>
@@ -173,7 +185,10 @@ export default function ImportersList() {
         </TableHeader>
         
         {importers.map((importer, index) => (
-          <ImporterRow key={index}>
+          <ImporterRow 
+            key={index}
+            onClick={() => handleImporterClick(importer)}
+          >
             <ImporterInfo>
               <Avatar>{importer.initials}</Avatar>
               <span>{importer.name}</span>
