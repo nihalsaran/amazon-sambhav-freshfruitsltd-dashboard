@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginPage from './Screens/LoginPage/LoginPage'
 import Dashboard from './Screens/Dashboard/Dashboard'
+import ShipmentManagement from './Screens/ShipmentManagement/ShipmentManagement'
 
 function App() {
   return (
@@ -8,9 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        {/* Add more routes here as needed, for example: */}
-        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="/shipmentmanagement" element={<ShipmentManagement />} />
       </Routes>
     </BrowserRouter>
   )
