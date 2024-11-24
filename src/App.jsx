@@ -5,6 +5,7 @@ import ShipmentManagement from './Screens/ShipmentManagement/ShipmentManagement'
 import ImportersList from './Screens/DocumentVerification/ImportersList'
 import ImporterDocuments from './Screens/DocumentVerification/ImporterDocuments'
 import ProtectedRoute from './Components/ProtectedRoute'
+import CreateShipment from './Screens/ShipmentManagement/CreateShipment'
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/shipmentmanagement" element={<ShipmentManagement />} />
         <Route path="/importerslist" element={<ImportersList />} />
         <Route path="/importerdocs" element={<ImporterDocuments />} />
+        <Route path="/newshipment" element={<CreateShipment />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,6 +1,7 @@
 // src/components/ShipmentManagement.jsx
 import styled from 'styled-components'
 import { Truck, ChevronDown, LineChart } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: grid;
@@ -89,7 +90,7 @@ const StatusButton = styled.button`
   font-size: 14px;
   cursor: pointer;
   background: ${props => {
-    switch(props.status) {
+    switch (props.status) {
       case 'In Transit': return '#1877F2';
       case 'Completed': return '#2ECC71';
       case 'Delayed': return '#F1C40F';
@@ -184,7 +185,7 @@ const Status = styled.span`
   border-radius: 12px;
   font-size: 14px;
   background: ${props => {
-    switch(props.status) {
+    switch (props.status) {
       case 'In Transit': return '#e3f2fd';
       case 'Completed': return '#e8f5e9';
       case 'Delayed': return '#fff3e0';
@@ -192,7 +193,7 @@ const Status = styled.span`
     }
   }};
   color: ${props => {
-    switch(props.status) {
+    switch (props.status) {
       case 'In Transit': return '#1877F2';
       case 'Completed': return '#2ECC71';
       case 'Delayed': return '#F1C40F';
@@ -245,16 +246,19 @@ const ChecklistItem = styled.div`
 `
 
 export default function ShipmentManagement() {
+  const navigate = useNavigate();
   return (
     <>
       <Header>
         <Logo>
           <Truck size={24} />
-          International Commerce Co.
+          Fresh Fruits LTD
         </Logo>
-        <NewShipmentButton>New Shipment</NewShipmentButton>
+        <NewShipmentButton onClick={() => navigate('/newshipment')}>
+          New Shipment
+        </NewShipmentButton>
       </Header>
-      
+
       <Container>
         <Sidebar>
           <FilterSection>
@@ -265,20 +269,20 @@ export default function ShipmentManagement() {
               <option>Last 30 days</option>
               <option>Custom range</option>
             </Select>
-            
+
             <Select defaultValue="FedEx">
               <option>FedEx</option>
               <option>DHL</option>
               <option>UPS</option>
             </Select>
-            
+
             <Select defaultValue="USA">
               <option>USA</option>
               <option>Canada</option>
               <option>Mexico</option>
             </Select>
           </FilterSection>
-          
+
           <FilterSection>
             <h3>Status</h3>
             <StatusFilters>
@@ -288,7 +292,7 @@ export default function ShipmentManagement() {
               <StatusButton status="Issue">Issue</StatusButton>
             </StatusFilters>
           </FilterSection>
-          
+
           <FilterSection>
             <h3>Priority Level</h3>
             <Select defaultValue="High">
@@ -297,10 +301,10 @@ export default function ShipmentManagement() {
               <option>Low</option>
             </Select>
           </FilterSection>
-          
+
           <SaveFilterButton>Save Filter Preset</SaveFilterButton>
         </Sidebar>
-        
+
         <MainContent>
           <ViewControls>
             <ViewToggle>
@@ -315,7 +319,7 @@ export default function ShipmentManagement() {
               </ActionButton>
             </div>
           </ViewControls>
-          
+
           <ShipmentTable>
             <thead>
               <tr>
@@ -371,7 +375,7 @@ export default function ShipmentManagement() {
             </tbody>
           </ShipmentTable>
         </MainContent>
-        
+
         <DetailsSidebar>
           <DetailSection>
             <h3>Quick View</h3>
@@ -381,7 +385,7 @@ export default function ShipmentManagement() {
               <p>Destination: LAX</p>
             </div>
           </DetailSection>
-          
+
           <DetailSection>
             <h3>Document Checklist</h3>
             <ChecklistItem>
@@ -397,7 +401,7 @@ export default function ShipmentManagement() {
               Invoice
             </ChecklistItem>
           </DetailSection>
-          
+
           <DetailSection>
             <h3>Communication Thread</h3>
             <p style={{ color: '#666', fontSize: '14px' }}>
