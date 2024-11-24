@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import backgroundImage from './fruits-export.png' // You'll need to add your image
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const LoginPage = styled.div`
   display: flex;
@@ -147,14 +150,39 @@ const LanguageSelector = styled.select`
 `
 
 export default function Login() {
-  const [showPassword, setShowPassword] = useState(false)
-  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Add this
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard'); // Redirect after successful login
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <LoginPage>
       <LeftSection>
         <Logo>
           <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
           </svg>
           Export Ease
         </Logo>
@@ -162,21 +190,54 @@ export default function Login() {
           "The best export service we've ever used! Highly recommended for efficiency and reliability." - John Smith, CEO of Global Exports
         </Testimonial>
       </LeftSection>
-      
+
       <RightSection>
-        <LoginForm>
+        <LoginForm onSubmit={handleSubmit}>
           <Title>Welcome back!</Title>
-          
+
+          {error && (
+            <div style={{ color: 'red', marginBottom: '1rem' }}>
+              {error}
+            </div>
+          )}
+
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email" />
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </FormGroup>
-          
+
           <FormGroup>
             <Label>Password</Label>
-            <Input type={showPassword ? 'text' : 'password'} />
+            <div style={{ position: 'relative' }}>
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  border: 'none',
+                  background: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                {showPassword ? '👁️' : '👁️‍🗨️'}
+              </button>
+            </div>
           </FormGroup>
-          
+
           <RememberForgot>
             <CheckboxLabel>
               <input type="checkbox" />
@@ -184,9 +245,15 @@ export default function Login() {
             </CheckboxLabel>
             <Link href="#">Forgot password?</Link>
           </RememberForgot>
-          
-          <LoginButton type="submit">Login</LoginButton>
-          
+
+          <LoginButton
+            type="submit"
+            disabled={loading}
+            style={{ opacity: loading ? 0.7 : 1 }}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </LoginButton>
+
           <div style={{ textAlign: 'center' }}>
             <Link href="#">Sign up</Link>
           </div>
@@ -195,7 +262,7 @@ export default function Login() {
             <SocialButton bgColor="#1DA1F2">t</SocialButton>
           </SocialButtons>
         </LoginForm>
-        
+
         <LanguageSelector>
           <option>English</option>
         </LanguageSelector>
