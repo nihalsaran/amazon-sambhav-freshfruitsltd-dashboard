@@ -92,6 +92,13 @@ const MetricCard = styled.div`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
 `
 
 const MetricTitle = styled.h3`
@@ -306,7 +313,7 @@ export default function Dashboard() {
       </Header>
 
       <MetricsGrid>
-        <MetricCard>
+        <MetricCard onClick={() => navigate('/shipmentmanagement')}>
           <MetricTitle>
             Active Shipments
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
