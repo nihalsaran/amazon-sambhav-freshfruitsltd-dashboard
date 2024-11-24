@@ -263,12 +263,12 @@ export default function Dashboard() {
         </MetricCard>
       </MetricsGrid>
 
-      <MapSection>
+      {/* <MapSection>
         <h2>Interactive World Map</h2>
         <WorldMap>
           <img src="/placeholder.svg" alt="World Map" />
         </WorldMap>
-      </MapSection>
+      </MapSection> */}
 
       <GridLayout>
         <Section>

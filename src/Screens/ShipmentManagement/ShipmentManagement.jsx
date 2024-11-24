@@ -383,13 +383,6 @@ export default function ShipmentManagement() {
           </DetailSection>
           
           <DetailSection>
-            <h3>Temperature Log</h3>
-            <Graph>
-              <LineChart size={200} />
-            </Graph>
-          </DetailSection>
-          
-          <DetailSection>
             <h3>Document Checklist</h3>
             <ChecklistItem>
               <input type="checkbox" checked readOnly />

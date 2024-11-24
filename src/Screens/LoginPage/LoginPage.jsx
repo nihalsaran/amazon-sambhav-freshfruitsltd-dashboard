@@ -190,7 +190,6 @@ export default function Login() {
           <div style={{ textAlign: 'center' }}>
             <Link href="#">Sign up</Link>
           </div>
-          
           <SocialButtons>
             <SocialButton bgColor="#1877F2">f</SocialButton>
             <SocialButton bgColor="#1DA1F2">t</SocialButton>
