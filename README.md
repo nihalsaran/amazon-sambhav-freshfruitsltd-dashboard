@@ -1,8 +1,28 @@
-# React + Vite
+## Installation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To get started with the project, follow the steps below:
 
-Currently, two official plugins are available:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/amazon-sambhav-freshfruitsltd-dashboard.git
+   ```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install the required dependencies:
+   ```bash
+   npm install
+   ```
+
+. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+The application will be live at http://localhost:5173/
+
+## Login Credentials
+
+For the initial login, use the following credentials:
+
+- **Email**: admin@gmail.com
+- **Password**: admin@123
+```

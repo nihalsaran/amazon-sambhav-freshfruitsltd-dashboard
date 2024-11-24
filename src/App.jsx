@@ -7,11 +7,13 @@ import ImporterDocuments from './Screens/DocumentVerification/ImporterDocuments'
 import ProtectedRoute from './Components/ProtectedRoute'
 import CreateShipment from './Screens/ShipmentManagement/CreateShipment'
 import QueryManagement from './Screens/Queries/QueryManagement'
+import LandingPage from './Screens/LandingPage/LandingPage'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route 
           path="/dashboard" 
           element={
