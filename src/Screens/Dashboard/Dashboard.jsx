@@ -1,6 +1,10 @@
 // src/components/Dashboard.jsx
 import styled from 'styled-components'
-import { Bell, Mail, Search, ChevronDown } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Bell, Mail, Search, ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardContainer = styled.div`
   padding: 20px;
@@ -188,21 +192,83 @@ const List = styled.ul`
   }
 `
 
+const ProfileDropdown = styled.div`
+  position: relative;
+`
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 200px;
+  z-index: 1000;
+  overflow: hidden;
+`
+
+const DropdownItem = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  
+  &:hover {
+    background: #f8f9fa;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`
+
 export default function Dashboard() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
+  // Click outside listener
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <DashboardContainer>
       <Header>
         <Logo>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+            <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
           </svg>
           Export Ease
         </Logo>
-        
+
         <SearchBar>
           <input type="text" placeholder="Search..." />
         </SearchBar>
-        
+
         <HeaderActions>
           <IconButton>
             <Bell size={20} />
@@ -210,10 +276,32 @@ export default function Dashboard() {
           <IconButton>
             <Mail size={20} />
           </IconButton>
-          <ProfileSection>
-            <Avatar src="/placeholder.svg" alt="Profile" />
-            <ChevronDown size={20} />
-          </ProfileSection>
+          <ProfileDropdown ref={dropdownRef}>
+            <ProfileSection onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+              <Avatar src="/placeholder.svg" alt="Profile" />
+              <ChevronDown size={20} />
+            </ProfileSection>
+
+            {isDropdownOpen && (
+              <DropdownMenu>
+                <DropdownItem>
+                  <User size={16} />
+                  Fresh Fruits LTD
+                </DropdownItem>
+                <DropdownItem>
+                  <Settings size={16} />
+                  Settings
+                </DropdownItem>
+                <DropdownItem
+                  onClick={handleLogout}
+                  style={{ color: '#E74C3C' }}
+                >
+                  <LogOut size={16} />
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
+            )}
+          </ProfileDropdown>
         </HeaderActions>
       </Header>
 
@@ -222,7 +310,7 @@ export default function Dashboard() {
           <MetricTitle>
             Active Shipments
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/>
+              <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z" />
             </svg>
           </MetricTitle>
           <MetricValue>1,024</MetricValue>
@@ -233,7 +321,7 @@ export default function Dashboard() {
           <MetricTitle>
             Pending Queries
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
             </svg>
           </MetricTitle>
           <MetricValue color="#F1C40F">256</MetricValue>
@@ -244,7 +332,7 @@ export default function Dashboard() {
           <MetricTitle>
             Monthly Revenue
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+              <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
             </svg>
           </MetricTitle>
           <MetricValue color="#1877F2">$1.2M</MetricValue>
@@ -255,7 +343,7 @@ export default function Dashboard() {
           <MetricTitle>
             Compliance Score
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
             </svg>
           </MetricTitle>
           <MetricValue color="#2ECC71">96%</MetricValue>
