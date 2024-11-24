@@ -1,7 +1,7 @@
 // src/components/Dashboard.jsx
 import styled from 'styled-components'
 import { useState, useRef, useEffect } from 'react'
-import { Bell, Mail, Search, ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import { Bell, Mail, ChevronDown, LogOut, Settings, User } from 'lucide-react'
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -125,31 +125,31 @@ const MetricChange = styled.div`
   margin-top: 8px;
 `
 
-const MapSection = styled.div`
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+// const MapSection = styled.div`
+//   background: white;
+//   border-radius: 8px;
+//   padding: 20px;
+//   margin-bottom: 20px;
   
-  h2 {
-    color: #0A2647;
-    margin-bottom: 16px;
-  }
-`
+//   h2 {
+//     color: #0A2647;
+//     margin-bottom: 16px;
+//   }
+// `
 
-const WorldMap = styled.div`
-  background: #0A2647;
-  height: 400px;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
+// const WorldMap = styled.div`
+//   background: #0A2647;
+//   height: 400px;
+//   border-radius: 8px;
+//   position: relative;
+//   overflow: hidden;
   
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`
+//   img {
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//   }
+// `
 
 const GridLayout = styled.div`
   display: grid;
@@ -266,10 +266,15 @@ export default function Dashboard() {
     <DashboardContainer>
       <Header>
         <Logo>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
           </svg>
-          Export Ease
+          Fresh Fruits LTD
         </Logo>
 
         <SearchBar>
@@ -301,7 +306,7 @@ export default function Dashboard() {
                 </DropdownItem>
                 <DropdownItem
                   onClick={handleLogout}
-                  style={{ color: '#E74C3C' }}
+                  style={{ color: "#E74C3C" }}
                 >
                   <LogOut size={16} />
                   Logout
@@ -313,7 +318,7 @@ export default function Dashboard() {
       </Header>
 
       <MetricsGrid>
-        <MetricCard onClick={() => navigate('/shipmentmanagement')}>
+        <MetricCard onClick={() => navigate("/shipmentmanagement")}>
           <MetricTitle>
             Active Shipments
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -324,7 +329,7 @@ export default function Dashboard() {
           <MetricChange isPositive>+8% from last month</MetricChange>
         </MetricCard>
 
-        <MetricCard onClick={() => navigate('/querymanagement')}>
+        <MetricCard onClick={() => navigate("/querymanagement")}>
           <MetricTitle>
             Pending Queries
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -345,7 +350,7 @@ export default function Dashboard() {
           <MetricChange isPositive>+12% from last month</MetricChange>
         </MetricCard>
 
-        <MetricCard onClick={() => navigate('/importerslist')}>
+        <MetricCard onClick={() => navigate("/importerslist")}>
           <MetricTitle>
             Pending Documents
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -413,5 +418,5 @@ export default function Dashboard() {
         </Section>
       </GridLayout>
     </DashboardContainer>
-  )
+  );
 }

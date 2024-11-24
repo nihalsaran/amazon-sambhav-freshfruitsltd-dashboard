@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import backgroundImage from './fruits-export.png' // You'll need to add your image
+import backgroundImage from './fruit-export.jpeg' // You'll need to add your image
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
@@ -184,10 +184,11 @@ export default function Login() {
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
           </svg>
-          Export Ease
+          Fresh Fruits LTD
         </Logo>
         <Testimonial>
-          "The best export service we've ever used! Highly recommended for efficiency and reliability." - John Smith, CEO of Global Exports
+          "The best export service we've ever used! Highly recommended for
+          efficiency and reliability." - John Smith, CEO of Global Exports
         </Testimonial>
       </LeftSection>
 
@@ -196,9 +197,7 @@ export default function Login() {
           <Title>Welcome back!</Title>
 
           {error && (
-            <div style={{ color: 'red', marginBottom: '1rem' }}>
-              {error}
-            </div>
+            <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
           )}
 
           <FormGroup>
@@ -213,9 +212,9 @@ export default function Login() {
 
           <FormGroup>
             <Label>Password</Label>
-            <div style={{ position: 'relative' }}>
+            <div style={{ position: "relative" }}>
               <Input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -224,16 +223,16 @@ export default function Login() {
                 type="button"
                 onClick={togglePasswordVisibility}
                 style={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer'
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  border: "none",
+                  background: "none",
+                  cursor: "pointer",
                 }}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? "👁️" : "👁️‍🗨️"}
               </button>
             </div>
           </FormGroup>
@@ -251,7 +250,7 @@ export default function Login() {
             disabled={loading}
             style={{ opacity: loading ? 0.7 : 1 }}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </LoginButton>
 
           {/* <div style={{ textAlign: 'center' }}>
@@ -268,5 +267,5 @@ export default function Login() {
         </LanguageSelector>
       </RightSection>
     </LoginPage>
-  )
+  );
 }
